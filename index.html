@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --ink: #1a1a1a;
@@ -23,26 +22,14 @@
       --serif: 'EB Garamond', Georgia, serif;
       --serif-b: 'Libre Baskerville', Georgia, serif;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
+    body { font-family: var(--serif); font-size: 17px; line-height: 1.75; background: var(--paper); color: var(--ink); }
 
-    body {
-      font-family: var(--serif);
-      font-size: 17px;
-      line-height: 1.75;
-      background: var(--paper);
-      color: var(--ink);
-    }
+    /* ── LAYOUT ── */
+    .layout { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
 
-    /* ── SIDEBAR ─────────────────────────────────────── */
-    .layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      min-height: 100vh;
-    }
-
+    /* ── SIDEBAR ── */
     aside {
       background: var(--accent);
       color: #c8d8e8;
@@ -52,682 +39,249 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      padding: 0;
       scrollbar-width: none;
     }
     aside::-webkit-scrollbar { display: none; }
 
-    .sidebar-top {
-      padding: 40px 28px 28px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
+    .sidebar-top { padding: 40px 28px 28px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .avatar-wrap {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.3);
-      overflow: hidden;
-      margin-bottom: 18px;
-      background: rgba(255,255,255,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 100px; height: 100px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3); overflow: hidden;
+      margin-bottom: 18px; background: rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
     }
     .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .avatar-initials {
-      font-family: var(--serif-b);
-      font-size: 28px;
-      color: rgba(255,255,255,0.6);
-      letter-spacing: 2px;
-    }
+    .avatar-initials { font-family: var(--serif-b); font-size: 28px; color: rgba(255,255,255,0.6); letter-spacing: 2px; }
+    .sidebar-name { font-family: var(--serif-b); font-size: 19px; font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 4px; }
+    .sidebar-role { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(200,216,232,0.65); margin-bottom: 6px; }
+    .sidebar-inst { font-size: 13px; color: rgba(200,216,232,0.75); font-style: italic; line-height: 1.4; }
 
-    .sidebar-name {
-      font-family: var(--serif-b);
-      font-size: 19px;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.3;
-      margin-bottom: 4px;
-    }
-    .sidebar-role {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(200,216,232,0.65);
-      margin-bottom: 6px;
-    }
-    .sidebar-inst {
-      font-size: 13px;
-      color: rgba(200,216,232,0.75);
-      font-style: italic;
-      line-height: 1.4;
-    }
+    /* Hamburger — hidden on desktop */
+    .mob-header { display: none; }
+    .hamburger { background: none; border: none; cursor: pointer; padding: 6px; display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.8); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    nav {
-      padding: 28px 0;
-      flex: 1;
-    }
-    nav a {
-      display: block;
-      padding: 9px 28px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(200,216,232,0.6);
-      text-decoration: none;
-      transition: color 0.2s, background 0.2s, padding-left 0.2s;
-      position: relative;
-    }
-    nav a::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: #8ab8d8;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    nav a:hover {
-      color: #fff;
-      padding-left: 36px;
-    }
+    nav { padding: 28px 0; flex: 1; }
+    nav a { display: block; padding: 9px 28px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(200,216,232,0.6); text-decoration: none; transition: color 0.2s, padding-left 0.2s; position: relative; }
+    nav a::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #8ab8d8; opacity: 0; transition: opacity 0.2s; }
+    nav a:hover { color: #fff; padding-left: 36px; }
     nav a:hover::before { opacity: 1; }
 
-    .sidebar-contact {
-      padding: 20px 28px 32px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-    .sidebar-contact a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: rgba(200,216,232,0.65);
-      text-decoration: none;
-      font-size: 12px;
-      font-family: var(--mono);
-      margin-bottom: 10px;
-      transition: color 0.2s;
-      word-break: break-all;
-    }
+    .sidebar-contact { padding: 20px 28px 32px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .sidebar-contact a { display: flex; align-items: center; gap: 10px; color: rgba(200,216,232,0.65); text-decoration: none; font-size: 12px; font-family: var(--mono); margin-bottom: 10px; transition: color 0.2s; word-break: break-all; }
     .sidebar-contact a:hover { color: #fff; }
-    .sidebar-contact .icon {
-      width: 16px; height: 16px;
-      flex-shrink: 0;
-      opacity: 0.7;
-    }
+    .sidebar-contact .icon { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7; }
 
-    /* ── MAIN ────────────────────────────────────────── */
-    main {
-      padding: 0;
-      overflow-x: hidden;
-    }
+    /* ── MAIN ── */
+    main { padding: 0; overflow-x: hidden; }
 
-    /* ── PAGE HEADER ─────────────────────────────────── */
-    .page-hero {
-      background: var(--paper-warm);
-      border-bottom: 1px solid var(--rule);
-      padding: 60px 60px 48px;
-      position: relative;
-      overflow: hidden;
-    }
-    .page-hero::after {
-      content: 'TCS';
-      position: absolute;
-      right: -10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: var(--serif-b);
-      font-size: 160px;
-      font-weight: 700;
-      color: rgba(0,0,0,0.03);
-      line-height: 1;
-      pointer-events: none;
-      letter-spacing: -6px;
-    }
-    .hero-label {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent-mid);
-      margin-bottom: 12px;
-    }
-    .page-hero h1 {
-      font-family: var(--serif-b);
-      font-size: 40px;
-      font-weight: 700;
-      color: var(--accent);
-      line-height: 1.15;
-      margin-bottom: 8px;
-    }
-    .page-hero .tagline {
-      font-size: 16px;
-      font-style: italic;
-      color: var(--ink-light);
-      max-width: 560px;
-    }
+    .page-hero { background: var(--paper-warm); border-bottom: 1px solid var(--rule); padding: 60px 60px 48px; position: relative; overflow: hidden; }
+    .page-hero::after { content: 'TCS'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-family: var(--serif-b); font-size: 160px; font-weight: 700; color: rgba(0,0,0,0.03); line-height: 1; pointer-events: none; letter-spacing: -6px; }
+    .hero-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 12px; }
+    .page-hero h1 { font-family: var(--serif-b); font-size: 40px; font-weight: 700; color: var(--accent); line-height: 1.15; margin-bottom: 8px; }
+    .page-hero .tagline { font-size: 16px; font-style: italic; color: var(--ink-light); max-width: 560px; }
 
-    /* ── SECTIONS ────────────────────────────────────── */
-    .content-body {
-      padding: 0 60px 60px;
-    }
-
-    section {
-      padding: 48px 0;
-      border-bottom: 1px solid var(--rule);
-      animation: fadeUp 0.5s ease both;
-    }
+    .content-body { padding: 0 60px 60px; }
+    section { padding: 48px 0; border-bottom: 1px solid var(--rule); }
     section:last-child { border-bottom: none; }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    .section-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 28px; }
+    .section-num { font-family: var(--mono); font-size: 11px; color: var(--accent-mid); opacity: 0.7; flex-shrink: 0; }
+    .section-title { font-family: var(--serif-b); font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); position: relative; }
+    .section-title::after { content: ''; display: block; height: 2px; background: var(--accent); margin-top: 5px; width: 32px; }
 
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-    .section-num {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--accent-mid);
-      opacity: 0.7;
-      flex-shrink: 0;
-    }
-    .section-title {
-      font-family: var(--serif-b);
-      font-size: 14px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      position: relative;
-    }
-    .section-title::after {
-      content: '';
-      display: block;
-      height: 2px;
-      background: var(--accent);
-      margin-top: 5px;
-      width: 32px;
-    }
-
-    /* ── ABOUT ───────────────────────────────────────── */
-    .about-text {
-      max-width: 700px;
-      font-size: 17px;
-      line-height: 1.85;
-      color: var(--ink-light);
-    }
+    /* About */
+    .about-text { max-width: 700px; font-size: 17px; line-height: 1.85; color: var(--ink-light); }
     .about-text p + p { margin-top: 14px; }
 
-    /* ── EDUCATION ───────────────────────────────────── */
+    /* Education */
     .edu-list { list-style: none; }
-    .edu-item {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 0 24px;
-      padding: 18px 0;
-      border-top: 1px solid var(--rule);
-    }
+    .edu-item { display: grid; grid-template-columns: 180px 1fr; gap: 0 24px; padding: 18px 0; border-top: 1px solid var(--rule); }
     .edu-item:first-child { border-top: none; padding-top: 0; }
-    .edu-year {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      color: var(--ink-faint);
-      padding-top: 3px;
-      line-height: 1.5;
-    }
-    .edu-body {}
-    .edu-degree {
-      font-family: var(--serif-b);
-      font-size: 15.5px;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 2px;
-    }
-    .edu-inst {
-      font-size: 14.5px;
-      color: var(--ink-light);
-      font-style: italic;
-    }
+    .edu-year { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); padding-top: 3px; line-height: 1.5; }
+    .edu-degree { font-family: var(--serif-b); font-size: 15.5px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+    .edu-inst { font-size: 14.5px; color: var(--ink-light); font-style: italic; }
 
-    /* ── SKILLS / LANGUAGES ──────────────────────────── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-    }
-    .skill-card {
-      background: #fff;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      padding: 18px 20px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .skill-card:hover {
-      border-color: var(--accent-mid);
-      box-shadow: 0 2px 12px rgba(26,58,92,0.07);
-    }
-    .skill-card-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-mid);
-      margin-bottom: 6px;
-    }
-    .skill-card-name {
-      font-family: var(--serif-b);
-      font-size: 15px;
-      color: var(--ink);
-      margin-bottom: 6px;
-    }
-    .skill-bar {
-      height: 3px;
-      background: var(--rule);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .skill-bar-fill {
-      height: 100%;
-      background: var(--accent-mid);
-      border-radius: 2px;
-      transition: width 1s ease;
-    }
+    /* Skills */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .skill-card { background: #fff; border: 1px solid var(--rule); border-radius: 4px; padding: 18px 20px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .skill-card:hover { border-color: var(--accent-mid); box-shadow: 0 2px 12px rgba(26,58,92,0.07); }
+    .skill-card-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 6px; }
+    .skill-card-name { font-family: var(--serif-b); font-size: 15px; color: var(--ink); margin-bottom: 6px; }
+    .skill-bar { height: 3px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+    .skill-bar-fill { height: 100%; background: var(--accent-mid); border-radius: 2px; }
 
-    .lang-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .lang-tag {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border: 1px solid var(--rule);
-      border-radius: 3px;
-      background: #fff;
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--ink-light);
-      transition: border-color 0.2s;
-    }
+    /* Languages */
+    .lang-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .lang-tag { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--rule); border-radius: 3px; background: #fff; font-family: var(--mono); font-size: 12px; color: var(--ink-light); transition: border-color 0.2s; }
     .lang-tag:hover { border-color: var(--accent-mid); color: var(--accent); }
-    .lang-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .lang-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-    /* ── RESEARCH INTERESTS ──────────────────────────── */
-    .research-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-    }
-    .research-card {
-      background: #fff;
-      border: 1px solid var(--rule);
-      border-left: 3px solid var(--accent-mid);
-      padding: 20px 22px;
-      border-radius: 0 4px 4px 0;
-      transition: box-shadow 0.2s;
-    }
-    .research-card:hover {
-      box-shadow: 0 4px 18px rgba(26,58,92,0.08);
-    }
-    .research-card h3 {
-      font-family: var(--serif-b);
-      font-size: 15px;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    .research-card p {
-      font-size: 14px;
-      color: var(--ink-light);
-      line-height: 1.65;
-    }
+    /* Research */
+    .research-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .research-card { background: #fff; border: 1px solid var(--rule); border-left: 3px solid var(--accent-mid); padding: 20px 22px; border-radius: 0 4px 4px 0; transition: box-shadow 0.2s; }
+    .research-card:hover { box-shadow: 0 4px 18px rgba(26,58,92,0.08); }
+    .research-card h3 { font-family: var(--serif-b); font-size: 15px; color: var(--accent); margin-bottom: 8px; }
+    .research-card p { font-size: 14px; color: var(--ink-light); line-height: 1.65; }
 
-    /* ── PROJECTS ────────────────────────────────────── */
-    .project-block {
-      padding: 24px 0;
-      border-top: 1px solid var(--rule);
-    }
+    /* Projects */
+    .project-block { padding: 24px 0; border-top: 1px solid var(--rule); }
     .project-block:first-child { border-top: none; padding-top: 0; }
-    .project-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .project-title {
-      font-family: var(--serif-b);
-      font-size: 16.5px;
-      color: var(--ink);
-    }
-    .project-sup {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--ink-faint);
-    }
-    .project-desc {
-      font-size: 15.5px;
-      color: var(--ink-light);
-      max-width: 680px;
-      line-height: 1.7;
-    }
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .ptag {
-      font-family: var(--mono);
-      font-size: 10px;
-      padding: 3px 9px;
-      background: var(--accent-pale);
-      color: var(--accent-mid);
-      border-radius: 2px;
-      letter-spacing: 0.06em;
-    }
+    .project-header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .project-title { font-family: var(--serif-b); font-size: 16.5px; color: var(--ink); }
+    .project-sup { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
+    .project-desc { font-size: 15.5px; color: var(--ink-light); max-width: 680px; line-height: 1.7; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .ptag { font-family: var(--mono); font-size: 10px; padding: 3px 9px; background: var(--accent-pale); color: var(--accent-mid); border-radius: 2px; letter-spacing: 0.06em; }
 
-    /* ── EXPERIENCE ──────────────────────────────────── */
-    .exp-item {
-      padding: 20px 0;
-      border-top: 1px solid var(--rule);
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 0 24px;
-    }
+    /* Experience */
+    .exp-item { padding: 20px 0; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 180px 1fr; gap: 0 24px; }
     .exp-item:first-child { border-top: none; padding-top: 0; }
-    .exp-period {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--ink-faint);
-      padding-top: 3px;
-      line-height: 1.7;
-    }
-    .exp-role {
-      font-family: var(--serif-b);
-      font-size: 15.5px;
-      color: var(--ink);
-      margin-bottom: 2px;
-    }
-    .exp-where {
-      font-size: 14px;
-      font-style: italic;
-      color: var(--ink-light);
-      margin-bottom: 6px;
-    }
-    .exp-desc {
-      font-size: 14.5px;
-      color: var(--ink-light);
-      line-height: 1.65;
-    }
+    .exp-period { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); padding-top: 3px; line-height: 1.7; }
+    .exp-role { font-family: var(--serif-b); font-size: 15.5px; color: var(--ink); margin-bottom: 2px; }
+    .exp-where { font-size: 14px; font-style: italic; color: var(--ink-light); margin-bottom: 6px; }
+    .exp-desc { font-size: 14.5px; color: var(--ink-light); line-height: 1.65; }
 
-    /* ── COURSES ─────────────────────────────────────── */
-    .course-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .course-pill {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      padding: 7px 16px;
-      background: var(--paper-warm);
-      border: 1px solid var(--rule);
-      border-radius: 3px;
-      color: var(--ink-light);
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .course-pill:hover {
-      background: var(--accent-pale);
-      border-color: var(--accent-mid);
-      color: var(--accent);
-    }
+    /* Courses */
+    .course-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .course-pill { font-family: var(--mono); font-size: 11.5px; padding: 7px 16px; background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 3px; color: var(--ink-light); transition: background 0.2s, border-color 0.2s; }
+    .course-pill:hover { background: var(--accent-pale); border-color: var(--accent-mid); color: var(--accent); }
 
-    /* ── PERSONAL INTERESTS ──────────────────────────── */
-    .interest-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .interest-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 15px;
-      color: var(--ink-light);
-      padding: 8px 16px;
-      background: #fff;
-      border: 1px solid var(--rule);
-      border-radius: 3px;
-    }
+    /* Personal */
+    .interest-list { display: flex; flex-wrap: wrap; gap: 12px; }
+    .interest-item { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--ink-light); padding: 8px 16px; background: #fff; border: 1px solid var(--rule); border-radius: 3px; }
     .interest-item span { font-size: 18px; }
 
-    /* ── CONTACT ─────────────────────────────────────── */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 14px;
-    }
-    .contact-card {
-      background: #fff;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      padding: 18px 22px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      text-decoration: none;
-      color: var(--ink);
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .contact-card:hover {
-      border-color: var(--accent-mid);
-      box-shadow: 0 2px 12px rgba(26,58,92,0.08);
-    }
-    .contact-icon {
-      width: 36px; height: 36px;
-      background: var(--accent-pale);
-      border-radius: 3px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
+    /* Contact */
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+    .contact-card { background: #fff; border: 1px solid var(--rule); border-radius: 4px; padding: 18px 22px; display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; }
+    .contact-card:hover { border-color: var(--accent-mid); box-shadow: 0 2px 12px rgba(26,58,92,0.08); }
+    .contact-icon { width: 36px; height: 36px; background: var(--accent-pale); border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .contact-icon svg { width: 18px; height: 18px; color: var(--accent-mid); }
-    .contact-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--ink-faint);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-    .contact-val {
-      font-size: 14px;
-      color: var(--ink);
-      word-break: break-all;
-    }
+    .contact-label { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
+    .contact-val { font-size: 14px; color: var(--ink); word-break: break-all; }
 
-    /* ── FOOTER ──────────────────────────────────────── */
-    footer {
-      background: var(--accent);
-      color: rgba(200,216,232,0.5);
-      text-align: center;
-      padding: 24px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-    }
+    footer { background: var(--accent); color: rgba(200,216,232,0.5); text-align: center; padding: 24px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; }
 
-    /* ── RESPONSIVE ──────────────────────────────────── */
+    /* ── RESPONSIVE ── */
 
-    /* Tablet: 600px–860px */
+    /* Nav drawer — only used on mobile */
+    .nav-drawer-wrap { display: contents; }
+
     @media (max-width: 860px) {
       .layout { grid-template-columns: 1fr; }
 
-      /* Sidebar collapses into a top header bar */
       aside {
-        position: static;
+        position: sticky;
+        top: 0;
         height: auto;
-        flex-direction: column;
-        padding: 0;
+        overflow: visible;
+        z-index: 100;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.3);
       }
 
-      .sidebar-top {
-        padding: 24px 20px 20px;
+      /* Show mobile header bar, hide desktop sidebar-top */
+      .sidebar-top { display: none; }
+      .mob-header {
         display: flex;
         align-items: center;
-        gap: 18px;
+        gap: 14px;
+        padding: 13px 18px;
         border-bottom: 1px solid rgba(255,255,255,0.1);
       }
-
-      .avatar-wrap {
-        width: 64px;
-        height: 64px;
-        flex-shrink: 0;
-        margin-bottom: 0;
+      .mob-avatar {
+        width: 46px; height: 46px; border-radius: 50%;
+        border: 1.5px solid rgba(255,255,255,0.3); overflow: hidden;
+        background: rgba(255,255,255,0.08);
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
       }
-      .avatar-initials { font-size: 20px; }
+      .mob-avatar img { width: 100%; height: 100%; object-fit: cover; }
+      .mob-avatar-init { font-family: var(--serif-b); font-size: 14px; color: rgba(255,255,255,0.6); display: none; }
+      .mob-name-block { flex: 1; min-width: 0; }
+      .mob-name { font-family: var(--serif-b); font-size: 15px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .mob-role { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(200,216,232,0.55); }
 
-      .sidebar-name { font-size: 17px; }
-      .sidebar-role { font-size: 10px; }
-      .sidebar-inst { font-size: 12px; }
-
-      /* Nav becomes a horizontal scrollable strip */
-      nav {
-        padding: 0;
-        flex: none;
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scrollbar-width: none;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        -webkit-overflow-scrolling: touch;
+      /* Nav drawer */
+      .nav-drawer-wrap {
+        display: block;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+        background: var(--accent);
       }
-      nav::-webkit-scrollbar { display: none; }
-      nav a {
-        padding: 12px 16px;
-        white-space: nowrap;
-        flex-shrink: 0;
-        border-right: 1px solid rgba(255,255,255,0.06);
-        font-size: 10px;
-      }
-      nav a:hover { padding-left: 16px; }
-      nav a::before { display: none; }
+      .nav-drawer-wrap.open { max-height: 700px; }
 
-      .sidebar-contact {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px 16px;
-        padding: 14px 20px;
-        border-top: none;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-      }
-      .sidebar-contact a { margin-bottom: 0; font-size: 11px; }
+      nav { padding: 8px 0; flex: none; }
+      nav a { padding: 10px 22px; font-size: 10.5px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      nav a:last-child { border-bottom: none; }
+      nav a:hover { padding-left: 30px; }
 
-      /* Hero */
-      .page-hero { padding: 32px 20px 28px; }
-      .page-hero h1 { font-size: 30px; }
-      .page-hero::after { font-size: 100px; }
+      .sidebar-contact { display: flex; flex-wrap: wrap; gap: 4px 14px; padding: 12px 22px; border-top: 1px solid rgba(255,255,255,0.08); }
+      .sidebar-contact a { margin-bottom: 0; font-size: 10.5px; }
 
-      /* Content */
-      .content-body { padding: 0 20px 48px; }
+      .page-hero { padding: 32px 28px 26px; }
+      .page-hero h1 { font-size: 28px; }
+      .page-hero .tagline { font-size: 15px; }
+      .page-hero::after { font-size: 90px; }
 
+      .content-body { padding: 0 28px 48px; }
       section { padding: 36px 0; }
 
-      /* Two-column grids collapse to single column */
-      .edu-item,
-      .exp-item {
-        grid-template-columns: 1fr;
-        gap: 2px;
-      }
-      .edu-year,
-      .exp-period {
-        font-size: 11px;
-        padding-top: 0;
-        margin-bottom: 4px;
-      }
+      .edu-item, .exp-item { grid-template-columns: 1fr; gap: 2px; }
+      .edu-year, .exp-period { padding-top: 0; margin-bottom: 4px; }
 
-      .skills-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
       .research-grid { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: 1fr; }
-
+      .skills-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
       .project-header { flex-direction: column; gap: 2px; }
     }
 
-    /* Mobile: ≤480px */
-    @media (max-width: 480px) {
-      .sidebar-top {
-        padding: 18px 16px;
-        gap: 14px;
-      }
-      .avatar-wrap { width: 52px; height: 52px; }
-      .avatar-initials { font-size: 16px; }
-      .sidebar-name { font-size: 15px; }
-      .sidebar-inst { display: none; }
+    @media (max-width: 540px) {
+      .mob-header { padding: 12px 16px; gap: 12px; }
+      nav a { padding: 10px 18px; font-size: 10px; }
+      .sidebar-contact { padding: 10px 18px; }
 
-      nav a { padding: 10px 14px; font-size: 9.5px; }
-
-      .sidebar-contact { padding: 10px 16px; gap: 6px 12px; }
-      .sidebar-contact a { font-size: 10.5px; }
-
-      .page-hero { padding: 24px 16px 22px; }
-      .page-hero h1 { font-size: 24px; }
+      .page-hero { padding: 24px 16px 20px; }
+      .page-hero h1 { font-size: 23px; }
       .hero-label { font-size: 9.5px; }
       .page-hero .tagline { font-size: 14px; }
       .page-hero::after { display: none; }
 
       .content-body { padding: 0 16px 40px; }
-
       section { padding: 28px 0; }
-      .section-header { margin-bottom: 20px; }
+      .section-header { margin-bottom: 18px; }
 
       .about-text { font-size: 15.5px; }
-
       .edu-degree { font-size: 14.5px; }
-      .edu-inst { font-size: 13.5px; }
+      .edu-inst { font-size: 13px; }
 
       .skills-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .skill-card { padding: 14px 14px; }
+      .skill-card { padding: 13px 14px; }
       .skill-card-name { font-size: 13.5px; }
-
-      .research-card { padding: 16px 16px; }
+      .research-card { padding: 16px; }
       .research-card h3 { font-size: 14px; }
       .research-card p { font-size: 13px; }
 
       .project-title { font-size: 15px; }
-      .project-desc { font-size: 14.5px; }
-
+      .project-desc { font-size: 14px; }
       .exp-role { font-size: 14.5px; }
       .exp-where { font-size: 13px; }
       .exp-desc { font-size: 13.5px; }
 
-      .course-pill { font-size: 10.5px; padding: 6px 12px; }
-
-      .interest-item { font-size: 14px; padding: 7px 12px; }
-
+      .course-pill { font-size: 10.5px; padding: 6px 11px; }
+      .interest-item { font-size: 13.5px; padding: 7px 12px; }
+      .contact-grid { grid-template-columns: 1fr; }
       .contact-card { padding: 14px 16px; }
-      .contact-val { font-size: 13px; }
-
       footer { font-size: 10px; padding: 18px 16px; }
     }
 
-    /* Very small: ≤360px */
     @media (max-width: 360px) {
       .skills-grid { grid-template-columns: 1fr; }
       .lang-tag { font-size: 11px; padding: 7px 12px; }
+      .page-hero h1 { font-size: 20px; }
     }
   </style>
 </head>
@@ -735,282 +289,178 @@
 
 <div class="layout">
 
-  <!-- ── SIDEBAR ─────────────────────────────────── -->
   <aside>
+    <!-- Mobile compact header -->
+    <div class="mob-header">
+      <div class="mob-avatar">
+        <img src="profile.png" alt="Gourab Das" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="mob-avatar-init">GD</div>
+      </div>
+      <div class="mob-name-block">
+        <div class="mob-name">Gourab Das</div>
+        <div class="mob-role">PhD Scholar &middot; TCS</div>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Desktop sidebar top -->
     <div class="sidebar-top">
       <div class="avatar-wrap">
-        <img src="profile.png" alt="Gourab Das" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="profile.png" alt="Gourab Das" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
         <div class="avatar-initials" style="display:none;">GD</div>
       </div>
       <div class="sidebar-name">Gourab Das</div>
-      <div class="sidebar-role">PhD Scholar</div>
+      <div class="sidebar-role">PhD Scholar &middot; TCS</div>
       <div class="sidebar-inst">Shiv Nadar Institution of Eminence</div>
     </div>
 
-    <nav>
-      <a href="#about">About</a>
-      <a href="#education">Education</a>
-      <a href="#research">Research Interests</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#skills">Skills</a>
-      <a href="#languages">Languages</a>
-      <a href="#courses">Relevant Courses</a>
-      <a href="#personal">Personal Interests</a>
-      <a href="#contact">Contact</a>
-    </nav>
-
-    <div class="sidebar-contact">
-      <a href="#">
-        <svg class="icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        <span class="__cf_email__">gourabdas1914@gmail.com</span>
-      </a>
-      <a href="https://github.com/gourab0715" target="_blank">
-        <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-        gourab0715
-      </a>
-      <a href="https://www.linkedin.com/in/gourab-das-157655230" target="_blank">
-        <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-        LinkedIn
-      </a>
+    <!-- Collapsible on mobile, always visible on desktop -->
+    <div class="nav-drawer-wrap" id="navDrawer">
+      <nav>
+        <a href="#about" class="navlink">About</a>
+        <a href="#education" class="navlink">Education</a>
+        <a href="#research" class="navlink">Research Interests</a>
+        <a href="#projects" class="navlink">Projects</a>
+        <a href="#experience" class="navlink">Experience</a>
+        <a href="#skills" class="navlink">Skills</a>
+        <a href="#languages" class="navlink">Languages</a>
+        <a href="#courses" class="navlink">Courses</a>
+        <a href="#personal" class="navlink">Personal</a>
+        <a href="#contact" class="navlink">Contact</a>
+      </nav>
+      <div class="sidebar-contact">
+        <a href="mailto:dasgourab541@gmail.com">
+          <svg class="icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          dasgourab541@gmail.com
+        </a>
+        <a href="https://github.com/gourab0715" target="_blank">
+          <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          gourab0715
+        </a>
+        <a href="https://www.linkedin.com/in/gourab-das-157655230" target="_blank">
+          <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
     </div>
   </aside>
 
-  <!-- ── MAIN ────────────────────────────────────── -->
   <main>
     <div class="page-hero">
-      <div class="hero-label">Theoretical Computer Science</div>
+      <div class="hero-label">Theoretical Computer Science &middot; Algorithm Design</div>
       <h1>Gourab Das</h1>
-      <p class="tagline">
-        PhD Research Scholar exploring the mathematical foundations of computation,
-        with a focus on algorithm design, analysis, and complexity.
-      </p>
+      <p class="tagline">PhD Research Scholar exploring the mathematical foundations of computation, with a focus on algorithm design, analysis, and complexity.</p>
     </div>
 
     <div class="content-body">
 
-      <!-- ABOUT -->
       <section id="about">
-        <div class="section-header">
-          <span class="section-num">01</span>
-          <span class="section-title">About Me</span>
-        </div>
+        <div class="section-header"><span class="section-num">01</span><span class="section-title">About Me</span></div>
         <div class="about-text">
-          <p>
-            I am a PhD scholar in Computer Science at Shiv Nadar Institution of Eminence (Delhi-NCR),
-            working at the intersection of algorithm design and theoretical computer science.
-            My research investigates the mathematical structures underlying efficient computation.
-          </p>
-          <p>
-            I hail from Kabilpur, a small village in the North 24 Parganas district of West Bengal.
-            My academic journey began at Ramakrishna Mission institutions, where a disciplined and
-            rigorous environment shaped my scholarly outlook and commitment to intellectual honesty.
-          </p>
-          <p>
-            I completed my B.Sc. in Computer Science from Ramakrishna Mission Vivekananda Centenary
-            College, Rahara, and my M.Sc. from Ramakrishna Mission Residential College, Narendrapur.
-            My current doctoral research focuses on algorithm design and analysis, with an interest in
-            problems at the boundary of theory and efficient computation.
-          </p>
+          <p>I am a PhD scholar in Computer Science at Shiv Nadar Institution of Eminence (Delhi-NCR), working at the intersection of algorithm design and theoretical computer science. My research investigates the mathematical structures underlying efficient computation.</p>
+          <p>I hail from Kabilpur, a small village in the North 24 Parganas district of West Bengal. My academic journey began at Ramakrishna Mission institutions, where a disciplined and rigorous environment shaped my scholarly outlook and commitment to intellectual honesty.</p>
+          <p>I completed my B.Sc. in Computer Science from Ramakrishna Mission Vivekananda Centenary College, Rahara, and my M.Sc. from Ramakrishna Mission Residential College, Narendrapur. My current doctoral research focuses on algorithm design and analysis, with an interest in problems at the boundary of theory and efficient computation.</p>
         </div>
       </section>
 
-      <!-- EDUCATION -->
       <section id="education">
-        <div class="section-header">
-          <span class="section-num">02</span>
-          <span class="section-title">Education</span>
-        </div>
+        <div class="section-header"><span class="section-num">02</span><span class="section-title">Education</span></div>
         <ul class="edu-list">
           <li class="edu-item">
-            <div class="edu-year">Jan 2026 – Present</div>
-            <div class="edu-body">
-              <div class="edu-degree">PhD in Computer Science &amp; Engineering</div>
-              <div class="edu-inst">Shiv Nadar Institution of Eminence, Delhi-NCR</div>
-            </div>
+            <div class="edu-year">Jan 2026 &ndash; Present</div>
+            <div><div class="edu-degree">PhD in Computer Science &amp; Engineering</div><div class="edu-inst">Shiv Nadar Institution of Eminence, Delhi-NCR</div></div>
           </li>
           <li class="edu-item">
-            <div class="edu-year">Jul 2023 – Jul 2025</div>
-            <div class="edu-body">
-              <div class="edu-degree">M.Sc. in Computer Science</div>
-              <div class="edu-inst">Ramakrishna Mission Residential College, Narendrapur</div>
-            </div>
+            <div class="edu-year">Jul 2023 &ndash; Jul 2025</div>
+            <div><div class="edu-degree">M.Sc. in Computer Science</div><div class="edu-inst">Ramakrishna Mission Residential College, Narendrapur</div></div>
           </li>
           <li class="edu-item">
-            <div class="edu-year">Jul 2020 – Jun 2023</div>
-            <div class="edu-body">
-              <div class="edu-degree">B.Sc. in Computer Science</div>
-              <div class="edu-inst">Ramakrishna Mission Vivekananda Centenary College, Rahara</div>
-            </div>
+            <div class="edu-year">Jul 2020 &ndash; Jun 2023</div>
+            <div><div class="edu-degree">B.Sc. in Computer Science</div><div class="edu-inst">Ramakrishna Mission Vivekananda Centenary College, Rahara</div></div>
           </li>
           <li class="edu-item">
-            <div class="edu-year">Apr 2018 – Feb 2020</div>
-            <div class="edu-body">
-              <div class="edu-degree">Higher Secondary in Science</div>
-              <div class="edu-inst">Katiahat B.K.A.P Institution (HS), Katiahat</div>
-            </div>
+            <div class="edu-year">Apr 2018 &ndash; Feb 2020</div>
+            <div><div class="edu-degree">Higher Secondary in Science</div><div class="edu-inst">Katiahat B.K.A.P Institution (HS), Katiahat</div></div>
           </li>
         </ul>
       </section>
 
-      <!-- RESEARCH INTERESTS -->
       <section id="research">
-        <div class="section-header">
-          <span class="section-num">03</span>
-          <span class="section-title">Research Interests</span>
-        </div>
+        <div class="section-header"><span class="section-num">03</span><span class="section-title">Research Interests</span></div>
         <div class="research-grid">
-          <div class="research-card">
-            <h3>Algorithm Design &amp; Analysis</h3>
-            <p>Designing efficient algorithms with formal correctness proofs and rigorous complexity analysis for classical and emerging computational problems.</p>
-          </div>
-          <div class="research-card">
-            <h3>Randomized Algorithms</h3>
-            <p>Exploring the power of randomness in computation, including probabilistic methods, random walks, and derandomization techniques.</p>
-          </div>
-          <div class="research-card">
-            <h3>Computational Complexity</h3>
-            <p>Understanding the inherent difficulty of computational problems and the relationships between complexity classes.</p>
-          </div>
-          <div class="research-card">
-            <h3>Graph Algorithms</h3>
-            <p>Structural and algorithmic problems on graphs, including flow, matching, and optimization problems with theoretical guarantees.</p>
-          </div>
+          <div class="research-card"><h3>Algorithm Design &amp; Analysis</h3><p>Designing efficient algorithms with formal correctness proofs and rigorous complexity analysis for classical and emerging computational problems.</p></div>
+          <div class="research-card"><h3>Randomized Algorithms</h3><p>Exploring the power of randomness in computation, including probabilistic methods, random walks, and derandomization techniques.</p></div>
+          <div class="research-card"><h3>Combinatorics &amp; Probability</h3><p>Applications of combinatorial structures and probabilistic arguments in algorithm design, including the probabilistic method and coupon collector-type problems.</p></div>
+          <div class="research-card"><h3>Randomness Testing &amp; Cryptographic Theory</h3><p>Statistical analysis of binary sequences, pseudo-random number generation, and randomness measurement using KL-divergence and NIST tests.</p></div>
+          <div class="research-card"><h3>Computational Complexity</h3><p>Understanding the inherent difficulty of computational problems and the relationships between complexity classes.</p></div>
+          <div class="research-card"><h3>Graph Algorithms</h3><p>Structural and algorithmic problems on graphs, including flow, matching, and optimization problems with theoretical guarantees.</p></div>
         </div>
       </section>
 
-      <!-- PROJECTS -->
       <section id="projects">
-        <div class="section-header">
-          <span class="section-num">04</span>
-          <span class="section-title">Projects</span>
-        </div>
-
+        <div class="section-header"><span class="section-num">04</span><span class="section-title">Projects</span></div>
         <div class="project-block">
           <div class="project-header">
             <div class="project-title">Randomness Testing Exploiting Prime Density</div>
-            <div class="project-sup">Supervisor : Dr. Arpita Maitra, Associate Professor, IAI - TCG CREST</div>
+            <div class="project-sup">Supervisor: Dr. Arpita Maitra</div>
           </div>
-          <p class="project-desc">
-            Analyzed binary strings to assess statistical randomness using NIST Statistical Tests and
-            Die-Harder tests. Developed a novel statistical test based on the Coupon Collector Problem
-            and Kullback–Leibler Divergence to classify binary sequences as random or non-random,
-            exploiting structural properties tied to prime number density.
-          </p>
-          <div class="project-tags">
-            <span class="ptag">Randomness Testing</span>
-            <span class="ptag">KL-Divergence</span>
-            <span class="ptag">Coupon Collector</span>
-            <span class="ptag">NIST Tests</span>
-            <span class="ptag">Statistical Analysis</span>
-          </div>
+          <p class="project-desc">Analyzed binary strings to assess statistical randomness using NIST Statistical Tests and Die-Harder tests. Developed a novel statistical test based on the Coupon Collector Problem and Kullback&ndash;Leibler Divergence to classify binary sequences as random or non-random, exploiting structural properties tied to prime number density.</p>
+          <div class="project-tags"><span class="ptag">Randomness Testing</span><span class="ptag">KL-Divergence</span><span class="ptag">Coupon Collector</span><span class="ptag">NIST Tests</span><span class="ptag">Statistical Analysis</span></div>
         </div>
-
         <div class="project-block">
           <div class="project-header">
             <div class="project-title">Online Registration System</div>
-            <div class="project-sup">Supervisor : Dr. Surajit Giri, Assistant Professor, RKMRC - Narendrapur</div>
+            <div class="project-sup">Supervisor: Dr. Surajit Giri</div>
           </div>
-          <p class="project-desc">
-            Developed a full-stack web application enabling user authentication via application IDs
-            and passwords. New users can register by providing personal details to generate a unique
-            application ID. The system demonstrates end-to-end form validation, session management,
-            and database-backed user records.
-          </p>
-          <div class="project-tags">
-            <span class="ptag">Web Development</span>
-            <span class="ptag">Authentication</span>
-            <span class="ptag">Database</span>
-            <span class="ptag">Full-Stack</span>
-          </div>
+          <p class="project-desc">Developed a full-stack web application enabling user authentication via application IDs and passwords. New users can register by providing personal details to generate a unique application ID, with end-to-end form validation, session management, and database-backed user records.</p>
+          <div class="project-tags"><span class="ptag">Web Development</span><span class="ptag">Authentication</span><span class="ptag">Database</span><span class="ptag">Full-Stack</span></div>
         </div>
       </section>
 
-      <!-- EXPERIENCE -->
       <section id="experience">
-        <div class="section-header">
-          <span class="section-num">05</span>
-          <span class="section-title">Experience</span>
-        </div>
-
+        <div class="section-header"><span class="section-num">05</span><span class="section-title">Experience</span></div>
         <div class="exp-item">
-          <div class="exp-period">Jan 2026 – Present</div>
-          <div>
-            <div class="exp-role">Doctoral Research Scholar</div>
-            <div class="exp-where">Shiv Nadar Institution of Eminence, Delhi-NCR</div>
-            <div class="exp-desc">Conducting research in theoretical computer science, focusing on algorithm design and analysis. Attending advanced graduate courses, seminars, and participating in the departmental research community.</div>
-          </div>
+          <div class="exp-period">Jan 2026 &ndash; Present</div>
+          <div><div class="exp-role">Doctoral Research Scholar</div><div class="exp-where">Shiv Nadar Institution of Eminence, Delhi-NCR</div><div class="exp-desc">Conducting research in theoretical computer science, focusing on algorithm design and analysis. Attending advanced graduate courses, seminars, and participating in the departmental research community.</div></div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-period">Jul 2023 &ndash; Jul 2025</div>
+          <div><div class="exp-role">Graduate Researcher (M.Sc.)</div><div class="exp-where">Ramakrishna Mission Residential College, Narendrapur</div><div class="exp-desc">Completed research project on randomness testing of binary sequences under Dr. Arpita Maitra. Developed statistical methods using probability theory and information-theoretic tools.</div></div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-period">Jul 2020 &ndash; Jun 2023</div>
+          <div><div class="exp-role">Undergraduate Researcher (B.Sc.)</div><div class="exp-where">Ramakrishna Mission Vivekananda Centenary College, Rahara</div><div class="exp-desc">Built the Online Registration System as a capstone project under Dr. Surajit Giri. Gained hands-on experience in software engineering, databases, and web development.</div></div>
         </div>
       </section>
 
-      <!-- SKILLS -->
       <section id="skills">
-        <div class="section-header">
-          <span class="section-num">06</span>
-          <span class="section-title">Skills</span>
-        </div>
+        <div class="section-header"><span class="section-num">06</span><span class="section-title">Technical Skills</span></div>
         <div class="skills-grid">
-          <div class="skill-card">
-            <div class="skill-card-label">Core</div>
-            <div class="skill-card-name">Algorithm Design</div>
-            <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-card-label">Core</div>
-            <div class="skill-card-name">Complexity Analysis</div>
-            <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-card-label">Mathematics</div>
-            <div class="skill-card-name">Linear Algebra</div>
-            <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-card-label">Mathematics</div>
-            <div class="skill-card-name">Probability &amp; Statistics</div>
-            <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-card-label">Programming</div>
-            <div class="skill-card-name">C / C++</div>
-            <div class="skill-bar"><div class="skill-bar-fill" style="width:72%"></div></div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-card-label">Tools</div>
-            <div class="skill-card-name">LaTeX</div>
-            <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
-          </div>
+          <div class="skill-card"><div class="skill-card-label">Core</div><div class="skill-card-name">Algorithm Design</div><div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+          <div class="skill-card"><div class="skill-card-label">Core</div><div class="skill-card-name">Complexity Analysis</div><div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div></div>
+          <div class="skill-card"><div class="skill-card-label">Mathematics</div><div class="skill-card-name">Combinatorics</div><div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div></div>
+          <div class="skill-card"><div class="skill-card-label">Mathematics</div><div class="skill-card-name">Probability Theory</div><div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div></div>
+          <div class="skill-card"><div class="skill-card-label">Programming</div><div class="skill-card-name">Python</div><div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div></div>
+          <div class="skill-card"><div class="skill-card-label">Programming</div><div class="skill-card-name">C / C++</div><div class="skill-bar"><div class="skill-bar-fill" style="width:72%"></div></div></div>
+          <div class="skill-card"><div class="skill-card-label">Data</div><div class="skill-card-name">Statistical Testing</div><div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div></div>
+          <div class="skill-card"><div class="skill-card-label">Web</div><div class="skill-card-name">Full-Stack Dev</div><div class="skill-bar"><div class="skill-bar-fill" style="width:60%"></div></div></div>
+          <div class="skill-card"><div class="skill-card-label">Tools</div><div class="skill-card-name">LaTeX</div><div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div></div>
         </div>
       </section>
 
-      <!-- LANGUAGES -->
       <section id="languages">
-        <div class="section-header">
-          <span class="section-num">07</span>
-          <span class="section-title">Languages</span>
-        </div>
+        <div class="section-header"><span class="section-num">07</span><span class="section-title">Languages</span></div>
         <div class="lang-grid">
-          <div class="lang-tag">
-            <div class="lang-dot" style="background:#1a3a5c;"></div>
-            Bengali &nbsp;<span style="color:#aaa;font-size:10px;">Native</span>
-          </div>
-          <div class="lang-tag">
-            <div class="lang-dot" style="background:#2c5f8a;"></div>
-            Hindi &nbsp;<span style="color:#aaa;font-size:10px;">Proficient</span>
-          </div>
-          <div class="lang-tag">
-            <div class="lang-dot" style="background:#4a8ab5;"></div>
-            English &nbsp;<span style="color:#aaa;font-size:10px;">Academic / Professional</span>
-          </div>
+          <div class="lang-tag"><div class="lang-dot" style="background:#1a3a5c;"></div>Bengali &nbsp;<span style="color:#aaa;font-size:10px;">Native</span></div>
+          <div class="lang-tag"><div class="lang-dot" style="background:#2c5f8a;"></div>Hindi &nbsp;<span style="color:#aaa;font-size:10px;">Proficient</span></div>
+          <div class="lang-tag"><div class="lang-dot" style="background:#4a8ab5;"></div>English &nbsp;<span style="color:#aaa;font-size:10px;">Academic / Professional</span></div>
         </div>
       </section>
 
-      <!-- COURSES -->
       <section id="courses">
-        <div class="section-header">
-          <span class="section-num">08</span>
-          <span class="section-title">Relevant Courses</span>
-        </div>
+        <div class="section-header"><span class="section-num">08</span><span class="section-title">Relevant Courses</span></div>
         <div class="course-grid">
           <span class="course-pill">Advanced Algorithms</span>
           <span class="course-pill">Algorithm Design &amp; Analysis</span>
@@ -1018,58 +468,86 @@
           <span class="course-pill">Data Structures</span>
           <span class="course-pill">Discrete Mathematics</span>
           <span class="course-pill">Probability &amp; Statistics</span>
+          <span class="course-pill">Machine Learning</span>
+          <span class="course-pill">Data Science</span>
+          <span class="course-pill">Research Methodology</span>
           <span class="course-pill">Cryptography</span>
           <span class="course-pill">Graph Theory</span>
           <span class="course-pill">Theory of Computation</span>
         </div>
       </section>
 
-      <!-- PERSONAL INTERESTS -->
-    <section id="personal">
-    <div class="section-header">
-      <span class="section-num">09</span>
-      <span class="section-title">Personal Interests</span>
-    </div>
-   <div class="interest-list">
-      <div class="interest-item"><span>📖</span> Reading Story Books</div>
-      <div class="interest-item"><span>🎬</span> Cinema</div>
-      <div class="interest-item"><span>🏊</span> Swimming</div>
-      <div class="interest-item"><span>🏸</span> Badminton</div>
-      <div class="interest-item"><span>🎵</span> Indian Classical Music</div>
-      <div class="interest-item"><span>🌿</span> Nature &amp; Village Life</div>
-      <div class="interest-item"><span>🎣</span> Fishing</div>
-   </div>
-</section>
-
-      <!-- CONTACT -->
-      <section id="contact">
-        <div class="section-header">
-          <span class="section-num">10</span>
-          <span class="section-title">Contact</span>
+      <section id="personal">
+        <div class="section-header"><span class="section-num">09</span><span class="section-title">Personal Interests</span></div>
+        <div class="interest-list">
+          <div class="interest-item"><span>📐</span> Mathematical Problem Solving</div>
+          <div class="interest-item"><span>📚</span> Reading (Science &amp; Philosophy)</div>
+          <div class="interest-item"><span>♟️</span> Chess</div>
+          <div class="interest-item"><span>🎵</span> Indian Classical Music</div>
+          <div class="interest-item"><span>🌿</span> Nature &amp; Village Life</div>
+          <div class="interest-item"><span>✍️</span> Technical Writing</div>
+          <div class="interest-item"><span>🧩</span> Competitive Programming</div>
         </div>
+      </section>
+
+      <section id="contact">
+        <div class="section-header"><span class="section-num">10</span><span class="section-title">Contact</span></div>
         <div class="contact-grid">
-          <div class="contact-card">
-            <div class="contact-icon">
-              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-            </div>
-            <div>
-              <div class="contact-label">Email</div>
-              <div class="contact-val">gourabdas1914@gmail.com</div>
-            </div>
-          </div>
+          <a href="mailto:dasgourab541@gmail.com" class="contact-card">
+            <div class="contact-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg></div>
+            <div><div class="contact-label">Email</div><div class="contact-val">dasgourab541@gmail.com</div></div>
+          </a>
           <a href="https://github.com/gourab0715" target="_blank" class="contact-card">
-            <div class="contact-icon">
-              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            </div>
-            <div>
-              <div class="contact-label">GitHub</div>
-              <div class="contact-val">gourab0715</div>
-            </div>
+            <div class="contact-icon"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></div>
+            <div><div class="contact-label">GitHub</div><div class="contact-val">gourab0715</div></div>
           </a>
           <a href="https://www.linkedin.com/in/gourab-das-157655230" target="_blank" class="contact-card">
-            <div class="contact-icon">
-              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-            </div>
-            <div>
-              <div class="contact-label">LinkedIn</div>
-              <div class="co
+            <div class="contact-icon"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></div>
+            <div><div class="contact-label">LinkedIn</div><div class="contact-val">gourab-das-157655230</div></div>
+          </a>
+        </div>
+      </section>
+
+    </div>
+
+    <footer>&copy; 2026 Gourab Das &middot; PhD Research Scholar &middot; Theoretical Computer Science</footer>
+  </main>
+
+</div>
+
+<script>
+  const btn = document.getElementById('hamburger');
+  const drawer = document.getElementById('navDrawer');
+
+  function applyDesktopState() {
+    if (window.innerWidth > 860) {
+      drawer.style.maxHeight = 'none';
+      drawer.style.overflow = 'visible';
+    } else {
+      if (!drawer.classList.contains('open')) {
+        drawer.style.maxHeight = '';
+        drawer.style.overflow = '';
+      }
+    }
+  }
+  applyDesktopState();
+  window.addEventListener('resize', applyDesktopState);
+
+  btn.addEventListener('click', () => {
+    const isOpen = drawer.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.setAttribute('aria-expanded', isOpen);
+  });
+
+  document.querySelectorAll('.navlink').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 860) {
+        drawer.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>
+</body>
+</html>

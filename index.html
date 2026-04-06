@@ -2,185 +2,997 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gourab Das | Research Scholar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gourab Das | Theoretical Computer Science</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --ink: #1a1a1a;
+      --ink-light: #444;
+      --ink-faint: #888;
+      --paper: #f9f7f2;
+      --paper-warm: #f2ede4;
+      --rule: #d4cfc6;
+      --accent: #1a3a5c;
+      --accent-mid: #2c5f8a;
+      --accent-pale: #dde8f2;
+      --mono: 'JetBrains Mono', monospace;
+      --serif: 'EB Garamond', Georgia, serif;
+      --serif-b: 'Libre Baskerville', Georgia, serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      line-height: 1.6;
-      background: #f4f6f8;
-      color: #333;
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.75;
+      background: var(--paper);
+      color: var(--ink);
     }
 
-    header {
-      background: #0a192f;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
+    /* ── SIDEBAR ─────────────────────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
     }
 
-    header img {
-      width: 140px;
-      height: 140px;
+    aside {
+      background: var(--accent);
+      color: #c8d8e8;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      scrollbar-width: none;
+    }
+    aside::-webkit-scrollbar { display: none; }
+
+    .sidebar-top {
+      padding: 40px 28px 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .avatar-wrap {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      border: 4px solid white;
-      margin-bottom: 15px;
+      border: 2px solid rgba(255,255,255,0.3);
+      overflow: hidden;
+      margin-bottom: 18px;
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-initials {
+      font-family: var(--serif-b);
+      font-size: 28px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 2px;
     }
 
-    header h1 {
-      margin: 10px 0;
-      font-size: 32px;
+    .sidebar-name {
+      font-family: var(--serif-b);
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 4px;
     }
-
-    header p {
-      font-size: 18px;
-      color: #ccd6f6;
+    .sidebar-role {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(200,216,232,0.65);
+      margin-bottom: 6px;
+    }
+    .sidebar-inst {
+      font-size: 13px;
+      color: rgba(200,216,232,0.75);
+      font-style: italic;
+      line-height: 1.4;
     }
 
     nav {
-      background: #112240;
-      padding: 10px;
-      text-align: center;
+      padding: 28px 0;
+      flex: 1;
     }
-
     nav a {
-      color: white;
-      margin: 0 15px;
+      display: block;
+      padding: 9px 28px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(200,216,232,0.6);
       text-decoration: none;
-      font-weight: bold;
+      transition: color 0.2s, background 0.2s, padding-left 0.2s;
+      position: relative;
     }
-
+    nav a::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: #8ab8d8;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
     nav a:hover {
-      color: #64ffda;
+      color: #fff;
+      padding-left: 36px;
+    }
+    nav a:hover::before { opacity: 1; }
+
+    .sidebar-contact {
+      padding: 20px 28px 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-contact a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(200,216,232,0.65);
+      text-decoration: none;
+      font-size: 12px;
+      font-family: var(--mono);
+      margin-bottom: 10px;
+      transition: color 0.2s;
+      word-break: break-all;
+    }
+    .sidebar-contact a:hover { color: #fff; }
+    .sidebar-contact .icon {
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+      opacity: 0.7;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 20px;
+    /* ── MAIN ────────────────────────────────────────── */
+    main {
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* ── PAGE HEADER ─────────────────────────────────── */
+    .page-hero {
+      background: var(--paper-warm);
+      border-bottom: 1px solid var(--rule);
+      padding: 60px 60px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::after {
+      content: 'TCS';
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--serif-b);
+      font-size: 160px;
+      font-weight: 700;
+      color: rgba(0,0,0,0.03);
+      line-height: 1;
+      pointer-events: none;
+      letter-spacing: -6px;
+    }
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-mid);
+      margin-bottom: 12px;
+    }
+    .page-hero h1 {
+      font-family: var(--serif-b);
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .page-hero .tagline {
+      font-size: 16px;
+      font-style: italic;
+      color: var(--ink-light);
+      max-width: 560px;
+    }
+
+    /* ── SECTIONS ────────────────────────────────────── */
+    .content-body {
+      padding: 0 60px 60px;
     }
 
     section {
-      background: white;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 48px 0;
+      border-bottom: 1px solid var(--rule);
+      animation: fadeUp 0.5s ease both;
+    }
+    section:last-child { border-bottom: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    h2 {
-      border-left: 5px solid #0077b6;
-      padding-left: 10px;
-      margin-bottom: 15px;
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .section-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent-mid);
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: var(--serif-b);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      height: 2px;
+      background: var(--accent);
+      margin-top: 5px;
+      width: 32px;
     }
 
-    ul {
-      padding-left: 20px;
+    /* ── ABOUT ───────────────────────────────────────── */
+    .about-text {
+      max-width: 700px;
+      font-size: 17px;
+      line-height: 1.85;
+      color: var(--ink-light);
+    }
+    .about-text p + p { margin-top: 14px; }
+
+    /* ── EDUCATION ───────────────────────────────────── */
+    .edu-list { list-style: none; }
+    .edu-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 0 24px;
+      padding: 18px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .edu-item:first-child { border-top: none; padding-top: 0; }
+    .edu-year {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--ink-faint);
+      padding-top: 3px;
+      line-height: 1.5;
+    }
+    .edu-body {}
+    .edu-degree {
+      font-family: var(--serif-b);
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .edu-inst {
+      font-size: 14.5px;
+      color: var(--ink-light);
+      font-style: italic;
     }
 
-    .project {
-      margin-bottom: 15px;
+    /* ── SKILLS / LANGUAGES ──────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .skill-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 18px 20px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .skill-card:hover {
+      border-color: var(--accent-mid);
+      box-shadow: 0 2px 12px rgba(26,58,92,0.07);
+    }
+    .skill-card-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-mid);
+      margin-bottom: 6px;
+    }
+    .skill-card-name {
+      font-family: var(--serif-b);
+      font-size: 15px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .skill-bar {
+      height: 3px;
+      background: var(--rule);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: var(--accent-mid);
+      border-radius: 2px;
+      transition: width 1s ease;
     }
 
+    .lang-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .lang-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      background: #fff;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-light);
+      transition: border-color 0.2s;
+    }
+    .lang-tag:hover { border-color: var(--accent-mid); color: var(--accent); }
+    .lang-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── RESEARCH INTERESTS ──────────────────────────── */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .research-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--accent-mid);
+      padding: 20px 22px;
+      border-radius: 0 4px 4px 0;
+      transition: box-shadow 0.2s;
+    }
+    .research-card:hover {
+      box-shadow: 0 4px 18px rgba(26,58,92,0.08);
+    }
+    .research-card h3 {
+      font-family: var(--serif-b);
+      font-size: 15px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .research-card p {
+      font-size: 14px;
+      color: var(--ink-light);
+      line-height: 1.65;
+    }
+
+    /* ── PROJECTS ────────────────────────────────────── */
+    .project-block {
+      padding: 24px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .project-block:first-child { border-top: none; padding-top: 0; }
+    .project-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .project-title {
+      font-family: var(--serif-b);
+      font-size: 16.5px;
+      color: var(--ink);
+    }
+    .project-sup {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+    }
+    .project-desc {
+      font-size: 15.5px;
+      color: var(--ink-light);
+      max-width: 680px;
+      line-height: 1.7;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .ptag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 9px;
+      background: var(--accent-pale);
+      color: var(--accent-mid);
+      border-radius: 2px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── EXPERIENCE ──────────────────────────────────── */
+    .exp-item {
+      padding: 20px 0;
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 0 24px;
+    }
+    .exp-item:first-child { border-top: none; padding-top: 0; }
+    .exp-period {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+      padding-top: 3px;
+      line-height: 1.7;
+    }
+    .exp-role {
+      font-family: var(--serif-b);
+      font-size: 15.5px;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .exp-where {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--ink-light);
+      margin-bottom: 6px;
+    }
+    .exp-desc {
+      font-size: 14.5px;
+      color: var(--ink-light);
+      line-height: 1.65;
+    }
+
+    /* ── COURSES ─────────────────────────────────────── */
+    .course-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .course-pill {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      padding: 7px 16px;
+      background: var(--paper-warm);
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      color: var(--ink-light);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .course-pill:hover {
+      background: var(--accent-pale);
+      border-color: var(--accent-mid);
+      color: var(--accent);
+    }
+
+    /* ── PERSONAL INTERESTS ──────────────────────────── */
+    .interest-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .interest-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      color: var(--ink-light);
+      padding: 8px 16px;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+    }
+    .interest-item span { font-size: 18px; }
+
+    /* ── CONTACT ─────────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .contact-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--ink);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .contact-card:hover {
+      border-color: var(--accent-mid);
+      box-shadow: 0 2px 12px rgba(26,58,92,0.08);
+    }
+    .contact-icon {
+      width: 36px; height: 36px;
+      background: var(--accent-pale);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon svg { width: 18px; height: 18px; color: var(--accent-mid); }
+    .contact-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .contact-val {
+      font-size: 14px;
+      color: var(--ink);
+      word-break: break-all;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────── */
     footer {
+      background: var(--accent);
+      color: rgba(200,216,232,0.5);
       text-align: center;
-      padding: 20px;
-      background: #0a192f;
-      color: white;
+      padding: 24px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      aside {
+        position: static;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 20px;
+        gap: 16px;
+      }
+      .sidebar-top { padding: 0; border: none; }
+      nav { padding: 0; display: flex; flex-wrap: wrap; gap: 4px; flex: none; }
+      nav a { padding: 6px 12px; border: 1px solid rgba(255,255,255,0.15); border-radius: 3px; }
+      nav a::before { display: none; }
+      .sidebar-contact { display: none; }
+      .page-hero { padding: 36px 24px 30px; }
+      .content-body { padding: 0 24px 48px; }
+      .edu-item, .exp-item { grid-template-columns: 1fr; gap: 4px; }
+      .edu-year, .exp-period { font-size: 11px; }
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <!-- Add your image file in repo -->
-  <img src="/profile.png" alt="Your Photo">
+<div class="layout">
 
-  <h1>Gourab Das</h1>
-  <p>Research Scholar</p>
-</header>
-
-<nav>
-  <a href="#about">About</a>
-  <a href="#education">Education</a>
-  <a href="#projects">Projects</a>
-  <a href="#courses">Courses</a>
-  <a href="#contact">Contact</a>
-</nav>
-
-<div class="container">
-
-  <!-- ABOUT -->
-  <section id="about">
-    <h2>About Me</h2>
-    <p>
-      Hello, I am a PhD scholar in Computer Science at Shiv Nadar Institute of Eminence (Delhi-NCR), with a strong academic foundation and a deep interest in algorithms and theoretical aspects of computer science.
-      I hail from Kabilpur, a small village in the North 24 Parganas district of West Bengal, which has shaped my grounded outlook and perseverance in pursuing higher education and research.
-      I completed my B.Sc. in Computer Science from Ramakrishna Mission Vivekananda Centenary College, Rahara, followed by an M.Sc. in Computer Science from Ramakrishna Mission Residential College, Narendrapur. 
-      My education at Ramakrishna Mission institutions has instilled in me a disciplined approach to learning, ethical values, and a strong inclination toward academic rigor.
-      Currently, my research focuses on algorithm design and analysis, and I am keen on exploring challenging problems that lie at the intersection of theory and efficient computation.
-      I aspire to contribute to impactful research, collaborate with fellow researchers, and grow as an academic and problem solver.
-    </p>
-  </section>
-
-  <!-- EDUCATION -->
-  <section id="education">
-    <h2>Education</h2>
-    <ul>
-      <li><strong>PhD in CSE</strong> - Shiv Nadar Institution of Eminence - (Jan, 2026 - Present)</li>
-      <li><strong>MSc in CS</strong> - Ramakrishna Mission Residential College, Narendrapur - (July, 2023 - July, 2025)</li>
-      <li><strong>BSc in CS</strong> - Ramakrishna Mission Vivekananda Centenary College, Rahara - (July, 2020 - June, 2023)</li>
-      <li><strong>Higher Secondary in Science</strong> - Katiahat B.K.A.P Institution (HS), Katiahat - (April, 2018 - Feb, 2020)</li>
-    </ul>
-  </section>
-
-  <section id="projects">
-  <h2>Projects</h2>
-
-  <div class="projects-container">
-
-    <div class="project">
-      <h3>Randomness Testing Exploiting Prime Density</h3>
-      <p>Analyze different binary string and check accuracy using NIST Statistical Test, Die-Harder Test etc.
-        We use Coupon Collector Problem and Kullback-Leibler Divergence for generating a statistical test which is used to check string random or non-random.</p>
-      <p class="supervisor">Supervisor : Dr. Arpita Maitra</p>
+  <!-- ── SIDEBAR ─────────────────────────────────── -->
+  <aside>
+    <div class="sidebar-top">
+      <div class="avatar-wrap">
+        <img src="profile.png" alt="Gourab Das" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="avatar-initials" style="display:none;">GD</div>
+      </div>
+      <div class="sidebar-name">Gourab Das</div>
+      <div class="sidebar-role">PhD Scholar · TCS</div>
+      <div class="sidebar-inst">Shiv Nadar Institution of Eminence</div>
     </div>
 
-    <div class="project">
-      <h3>Implement Online Registration System</h3>
-      <p>Developed a website where user can login with application ID and password and new user can generate application ID using details.</p>
-      <p class="supervisor">Supervisor : Dr. Surajit Giri</p>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#research">Research Interests</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#languages">Languages</a>
+      <a href="#courses">Courses</a>
+      <a href="#personal">Personal</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="sidebar-contact">
+      <a href="mailto:dasgourab541@gmail.com">
+        <svg class="icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        dasgourab541@gmail.com
+      </a>
+      <a href="https://github.com/gourab0715" target="_blank">
+        <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        gourab0715
+      </a>
+      <a href="https://www.linkedin.com/in/gourab-das-157655230" target="_blank">
+        <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ────────────────────────────────────── -->
+  <main>
+    <div class="page-hero">
+      <div class="hero-label">Theoretical Computer Science · Algorithm Design</div>
+      <h1>Gourab Das</h1>
+      <p class="tagline">
+        PhD Research Scholar exploring the mathematical foundations of computation,
+        with a focus on algorithm design, analysis, and complexity.
+      </p>
     </div>
 
-  </div>
-</section>
+    <div class="content-body">
 
-  <!-- COURSES -->
-  <section id="courses">
-    <h2>Courses</h2>
-    <ul>
-      <li>Machine Learning</li>
-      <li>Data Science</li>
-      <li>Advanced Algorithms</li>
-      <li>Research Methodology</li>
-    </ul>
-  </section>
+      <!-- ABOUT -->
+      <section id="about">
+        <div class="section-header">
+          <span class="section-num">01</span>
+          <span class="section-title">About Me</span>
+        </div>
+        <div class="about-text">
+          <p>
+            I am a PhD scholar in Computer Science at Shiv Nadar Institution of Eminence (Delhi-NCR),
+            working at the intersection of algorithm design and theoretical computer science.
+            My research investigates the mathematical structures underlying efficient computation.
+          </p>
+          <p>
+            I hail from Kabilpur, a small village in the North 24 Parganas district of West Bengal.
+            My academic journey began at Ramakrishna Mission institutions, where a disciplined and
+            rigorous environment shaped my scholarly outlook and commitment to intellectual honesty.
+          </p>
+          <p>
+            I completed my B.Sc. in Computer Science from Ramakrishna Mission Vivekananda Centenary
+            College, Rahara, and my M.Sc. from Ramakrishna Mission Residential College, Narendrapur.
+            My current doctoral research focuses on algorithm design and analysis, with an interest in
+            problems at the boundary of theory and efficient computation.
+          </p>
+        </div>
+      </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email : dasgourab541@email.com</p>
-    <p>LinkedIn : https://www.linkedin.com/in/gourab-das-157655230</p>
-    <p>GitHub : github.com/gourab0715</p>
-  </section>
+      <!-- EDUCATION -->
+      <section id="education">
+        <div class="section-header">
+          <span class="section-num">02</span>
+          <span class="section-title">Education</span>
+        </div>
+        <ul class="edu-list">
+          <li class="edu-item">
+            <div class="edu-year">Jan 2026 – Present</div>
+            <div class="edu-body">
+              <div class="edu-degree">PhD in Computer Science &amp; Engineering</div>
+              <div class="edu-inst">Shiv Nadar Institution of Eminence, Delhi-NCR</div>
+            </div>
+          </li>
+          <li class="edu-item">
+            <div class="edu-year">Jul 2023 – Jul 2025</div>
+            <div class="edu-body">
+              <div class="edu-degree">M.Sc. in Computer Science</div>
+              <div class="edu-inst">Ramakrishna Mission Residential College, Narendrapur</div>
+            </div>
+          </li>
+          <li class="edu-item">
+            <div class="edu-year">Jul 2020 – Jun 2023</div>
+            <div class="edu-body">
+              <div class="edu-degree">B.Sc. in Computer Science</div>
+              <div class="edu-inst">Ramakrishna Mission Vivekananda Centenary College, Rahara</div>
+            </div>
+          </li>
+          <li class="edu-item">
+            <div class="edu-year">Apr 2018 – Feb 2020</div>
+            <div class="edu-body">
+              <div class="edu-degree">Higher Secondary in Science</div>
+              <div class="edu-inst">Katiahat B.K.A.P Institution (HS), Katiahat</div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- RESEARCH INTERESTS -->
+      <section id="research">
+        <div class="section-header">
+          <span class="section-num">03</span>
+          <span class="section-title">Research Interests</span>
+        </div>
+        <div class="research-grid">
+          <div class="research-card">
+            <h3>Algorithm Design &amp; Analysis</h3>
+            <p>Designing efficient algorithms with formal correctness proofs and rigorous complexity analysis for classical and emerging computational problems.</p>
+          </div>
+          <div class="research-card">
+            <h3>Randomized Algorithms</h3>
+            <p>Exploring the power of randomness in computation, including probabilistic methods, random walks, and derandomization techniques.</p>
+          </div>
+          <div class="research-card">
+            <h3>Combinatorics &amp; Probability</h3>
+            <p>Applications of combinatorial structures and probabilistic arguments in algorithm design, including the probabilistic method and coupon collector-type problems.</p>
+          </div>
+          <div class="research-card">
+            <h3>Randomness Testing &amp; Cryptographic Theory</h3>
+            <p>Statistical analysis of binary sequences, pseudo-random number generation, and foundational aspects of randomness measurement using tools like KL-divergence and NIST tests.</p>
+          </div>
+          <div class="research-card">
+            <h3>Computational Complexity</h3>
+            <p>Understanding the inherent difficulty of computational problems and the relationships between complexity classes.</p>
+          </div>
+          <div class="research-card">
+            <h3>Graph Algorithms</h3>
+            <p>Structural and algorithmic problems on graphs, including flow, matching, and optimization problems with theoretical guarantees.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="projects">
+        <div class="section-header">
+          <span class="section-num">04</span>
+          <span class="section-title">Projects</span>
+        </div>
+
+        <div class="project-block">
+          <div class="project-header">
+            <div class="project-title">Randomness Testing Exploiting Prime Density</div>
+            <div class="project-sup">Supervisor: Dr. Arpita Maitra</div>
+          </div>
+          <p class="project-desc">
+            Analyzed binary strings to assess statistical randomness using NIST Statistical Tests and
+            Die-Harder tests. Developed a novel statistical test based on the Coupon Collector Problem
+            and Kullback–Leibler Divergence to classify binary sequences as random or non-random,
+            exploiting structural properties tied to prime number density.
+          </p>
+          <div class="project-tags">
+            <span class="ptag">Randomness Testing</span>
+            <span class="ptag">KL-Divergence</span>
+            <span class="ptag">Coupon Collector</span>
+            <span class="ptag">NIST Tests</span>
+            <span class="ptag">Statistical Analysis</span>
+          </div>
+        </div>
+
+        <div class="project-block">
+          <div class="project-header">
+            <div class="project-title">Online Registration System</div>
+            <div class="project-sup">Supervisor: Dr. Surajit Giri</div>
+          </div>
+          <p class="project-desc">
+            Developed a full-stack web application enabling user authentication via application IDs
+            and passwords. New users can register by providing personal details to generate a unique
+            application ID. The system demonstrates end-to-end form validation, session management,
+            and database-backed user records.
+          </p>
+          <div class="project-tags">
+            <span class="ptag">Web Development</span>
+            <span class="ptag">Authentication</span>
+            <span class="ptag">Database</span>
+            <span class="ptag">Full-Stack</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience">
+        <div class="section-header">
+          <span class="section-num">05</span>
+          <span class="section-title">Experience</span>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-period">Jan 2026 – Present</div>
+          <div>
+            <div class="exp-role">Doctoral Research Scholar</div>
+            <div class="exp-where">Shiv Nadar Institution of Eminence, Delhi-NCR</div>
+            <div class="exp-desc">Conducting research in theoretical computer science, focusing on algorithm design and analysis. Attending advanced graduate courses, seminars, and participating in the departmental research community.</div>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-period">Jul 2023 – Jul 2025</div>
+          <div>
+            <div class="exp-role">Graduate Researcher (M.Sc.)</div>
+            <div class="exp-where">Ramakrishna Mission Residential College, Narendrapur</div>
+            <div class="exp-desc">Completed research project on randomness testing of binary sequences under Dr. Arpita Maitra. Developed statistical methods using probability theory and information-theoretic tools.</div>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-period">Jul 2020 – Jun 2023</div>
+          <div>
+            <div class="exp-role">Undergraduate Researcher (B.Sc.)</div>
+            <div class="exp-where">Ramakrishna Mission Vivekananda Centenary College, Rahara</div>
+            <div class="exp-desc">Built the Online Registration System as a capstone project under Dr. Surajit Giri. Gained hands-on experience in software engineering, databases, and web development.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section id="skills">
+        <div class="section-header">
+          <span class="section-num">06</span>
+          <span class="section-title">Technical Skills</span>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-card-label">Core</div>
+            <div class="skill-card-name">Algorithm Design</div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-label">Core</div>
+            <div class="skill-card-name">Complexity Analysis</div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-label">Mathematics</div>
+            <div class="skill-card-name">Combinatorics</div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-label">Mathematics</div>
+            <div class="skill-card-name">Probability Theory</div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-label">Programming</div>
+            <div class="skill-card-name">Python</div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-label">Programming</div>
+            <div class="skill-card-name">C / C++</div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:72%"></div></div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-label">Data</div>
+            <div class="skill-card-name">Statistical Testing</div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-label">Web</div>
+            <div class="skill-card-name">Full-Stack Dev</div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:60%"></div></div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-label">Tools</div>
+            <div class="skill-card-name">LaTeX</div>
+            <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LANGUAGES -->
+      <section id="languages">
+        <div class="section-header">
+          <span class="section-num">07</span>
+          <span class="section-title">Languages</span>
+        </div>
+        <div class="lang-grid">
+          <div class="lang-tag">
+            <div class="lang-dot" style="background:#1a3a5c;"></div>
+            Bengali &nbsp;<span style="color:#aaa;font-size:10px;">Native</span>
+          </div>
+          <div class="lang-tag">
+            <div class="lang-dot" style="background:#2c5f8a;"></div>
+            Hindi &nbsp;<span style="color:#aaa;font-size:10px;">Proficient</span>
+          </div>
+          <div class="lang-tag">
+            <div class="lang-dot" style="background:#4a8ab5;"></div>
+            English &nbsp;<span style="color:#aaa;font-size:10px;">Academic / Professional</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- COURSES -->
+      <section id="courses">
+        <div class="section-header">
+          <span class="section-num">08</span>
+          <span class="section-title">Relevant Courses</span>
+        </div>
+        <div class="course-grid">
+          <span class="course-pill">Advanced Algorithms</span>
+          <span class="course-pill">Algorithm Design &amp; Analysis</span>
+          <span class="course-pill">Computational Complexity Theory</span>
+          <span class="course-pill">Data Structures</span>
+          <span class="course-pill">Discrete Mathematics</span>
+          <span class="course-pill">Probability &amp; Statistics</span>
+          <span class="course-pill">Machine Learning</span>
+          <span class="course-pill">Data Science</span>
+          <span class="course-pill">Research Methodology</span>
+          <span class="course-pill">Cryptography</span>
+          <span class="course-pill">Graph Theory</span>
+          <span class="course-pill">Theory of Computation</span>
+        </div>
+      </section>
+
+      <!-- PERSONAL INTERESTS -->
+      <section id="personal">
+        <div class="section-header">
+          <span class="section-num">09</span>
+          <span class="section-title">Personal Interests</span>
+        </div>
+        <div class="interest-list">
+          <div class="interest-item"><span>📐</span> Mathematical Problem Solving</div>
+          <div class="interest-item"><span>📚</span> Reading (Science &amp; Philosophy)</div>
+          <div class="interest-item"><span>♟️</span> Chess</div>
+          <div class="interest-item"><span>🎵</span> Indian Classical Music</div>
+          <div class="interest-item"><span>🌿</span> Nature &amp; Village Life</div>
+          <div class="interest-item"><span>✍️</span> Technical Writing</div>
+          <div class="interest-item"><span>🧩</span> Competitive Programming</div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <div class="section-header">
+          <span class="section-num">10</span>
+          <span class="section-title">Contact</span>
+        </div>
+        <div class="contact-grid">
+          <a href="mailto:dasgourab541@gmail.com" class="contact-card">
+            <div class="contact-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-val">dasgourab541@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://github.com/gourab0715" target="_blank" class="contact-card">
+            <div class="contact-icon">
+              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">GitHub</div>
+              <div class="contact-val">gourab0715</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/gourab-das-157655230" target="_blank" class="contact-card">
+            <div class="contact-icon">
+              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-val">gourab-das-157655230</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+    </div><!-- /content-body -->
+
+    <footer>
+      © 2026 Gourab Das · PhD Research Scholar · Theoretical Computer Science
+    </footer>
+  </main>
 
 </div>
-
-<footer>
-  <p>© 2026 Gourab | PhD Research Scholar</p>
-</footer>
 
 </body>
 </html>

@@ -572,25 +572,162 @@
     }
 
     /* ── RESPONSIVE ──────────────────────────────────── */
+
+    /* Tablet: 600px–860px */
     @media (max-width: 860px) {
       .layout { grid-template-columns: 1fr; }
+
+      /* Sidebar collapses into a top header bar */
       aside {
         position: static;
         height: auto;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 20px;
-        gap: 16px;
+        flex-direction: column;
+        padding: 0;
       }
-      .sidebar-top { padding: 0; border: none; }
-      nav { padding: 0; display: flex; flex-wrap: wrap; gap: 4px; flex: none; }
-      nav a { padding: 6px 12px; border: 1px solid rgba(255,255,255,0.15); border-radius: 3px; }
+
+      .sidebar-top {
+        padding: 24px 20px 20px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .avatar-wrap {
+        width: 64px;
+        height: 64px;
+        flex-shrink: 0;
+        margin-bottom: 0;
+      }
+      .avatar-initials { font-size: 20px; }
+
+      .sidebar-name { font-size: 17px; }
+      .sidebar-role { font-size: 10px; }
+      .sidebar-inst { font-size: 12px; }
+
+      /* Nav becomes a horizontal scrollable strip */
+      nav {
+        padding: 0;
+        flex: none;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        -webkit-overflow-scrolling: touch;
+      }
+      nav::-webkit-scrollbar { display: none; }
+      nav a {
+        padding: 12px 16px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        border-right: 1px solid rgba(255,255,255,0.06);
+        font-size: 10px;
+      }
+      nav a:hover { padding-left: 16px; }
       nav a::before { display: none; }
-      .sidebar-contact { display: none; }
-      .page-hero { padding: 36px 24px 30px; }
-      .content-body { padding: 0 24px 48px; }
-      .edu-item, .exp-item { grid-template-columns: 1fr; gap: 4px; }
-      .edu-year, .exp-period { font-size: 11px; }
+
+      .sidebar-contact {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 16px;
+        padding: 14px 20px;
+        border-top: none;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .sidebar-contact a { margin-bottom: 0; font-size: 11px; }
+
+      /* Hero */
+      .page-hero { padding: 32px 20px 28px; }
+      .page-hero h1 { font-size: 30px; }
+      .page-hero::after { font-size: 100px; }
+
+      /* Content */
+      .content-body { padding: 0 20px 48px; }
+
+      section { padding: 36px 0; }
+
+      /* Two-column grids collapse to single column */
+      .edu-item,
+      .exp-item {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+      .edu-year,
+      .exp-period {
+        font-size: 11px;
+        padding-top: 0;
+        margin-bottom: 4px;
+      }
+
+      .skills-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .research-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+
+      .project-header { flex-direction: column; gap: 2px; }
+    }
+
+    /* Mobile: ≤480px */
+    @media (max-width: 480px) {
+      .sidebar-top {
+        padding: 18px 16px;
+        gap: 14px;
+      }
+      .avatar-wrap { width: 52px; height: 52px; }
+      .avatar-initials { font-size: 16px; }
+      .sidebar-name { font-size: 15px; }
+      .sidebar-inst { display: none; }
+
+      nav a { padding: 10px 14px; font-size: 9.5px; }
+
+      .sidebar-contact { padding: 10px 16px; gap: 6px 12px; }
+      .sidebar-contact a { font-size: 10.5px; }
+
+      .page-hero { padding: 24px 16px 22px; }
+      .page-hero h1 { font-size: 24px; }
+      .hero-label { font-size: 9.5px; }
+      .page-hero .tagline { font-size: 14px; }
+      .page-hero::after { display: none; }
+
+      .content-body { padding: 0 16px 40px; }
+
+      section { padding: 28px 0; }
+      .section-header { margin-bottom: 20px; }
+
+      .about-text { font-size: 15.5px; }
+
+      .edu-degree { font-size: 14.5px; }
+      .edu-inst { font-size: 13.5px; }
+
+      .skills-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .skill-card { padding: 14px 14px; }
+      .skill-card-name { font-size: 13.5px; }
+
+      .research-card { padding: 16px 16px; }
+      .research-card h3 { font-size: 14px; }
+      .research-card p { font-size: 13px; }
+
+      .project-title { font-size: 15px; }
+      .project-desc { font-size: 14.5px; }
+
+      .exp-role { font-size: 14.5px; }
+      .exp-where { font-size: 13px; }
+      .exp-desc { font-size: 13.5px; }
+
+      .course-pill { font-size: 10.5px; padding: 6px 12px; }
+
+      .interest-item { font-size: 14px; padding: 7px 12px; }
+
+      .contact-card { padding: 14px 16px; }
+      .contact-val { font-size: 13px; }
+
+      footer { font-size: 10px; padding: 18px 16px; }
+    }
+
+    /* Very small: ≤360px */
+    @media (max-width: 360px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .lang-tag { font-size: 11px; padding: 7px 12px; }
     }
   </style>
 </head>
@@ -624,9 +761,9 @@
     </nav>
 
     <div class="sidebar-contact">
-      <a href="mailto:dasgourab541@gmail.com">
+      <a href="/cdn-cgi/l/email-protection#98fcf9ebfff7edeaf9faadaca9d8fff5f9f1f4b6fbf7f5">
         <svg class="icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        dasgourab541@gmail.com
+        <span class="__cf_email__" data-cfemail="82e6e3f1e5edf7f0e3e0b7b6b3c2e5efe3ebeeace1edef">[email&#160;protected]</span>
       </a>
       <a href="https://github.com/gourab0715" target="_blank">
         <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
@@ -955,13 +1092,13 @@
           <span class="section-title">Contact</span>
         </div>
         <div class="contact-grid">
-          <a href="mailto:dasgourab541@gmail.com" class="contact-card">
+          <a href="/cdn-cgi/l/email-protection#32565341555d4740535007060372555f535b5e1c515d5f" class="contact-card">
             <div class="contact-icon">
               <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
             </div>
             <div>
               <div class="contact-label">Email</div>
-              <div class="contact-val">dasgourab541@gmail.com</div>
+              <div class="contact-val"><span class="__cf_email__" data-cfemail="33575240545c4641525106070273545e525a5f1d505c5e">[email&#160;protected]</span></div>
             </div>
           </a>
           <a href="https://github.com/gourab0715" target="_blank" class="contact-card">
@@ -979,20 +1116,4 @@
             </div>
             <div>
               <div class="contact-label">LinkedIn</div>
-              <div class="contact-val">gourab-das-157655230</div>
-            </div>
-          </a>
-        </div>
-      </section>
-
-    </div><!-- /content-body -->
-
-    <footer>
-      © 2026 Gourab Das · PhD Research Scholar · Theoretical Computer Science
-    </footer>
-  </main>
-
-</div>
-
-</body>
-</html>
+              <div class="co
